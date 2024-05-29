@@ -1,44 +1,40 @@
 pipeline {
- agent any
- stages {
- 	stage('Checkout') {
- 		steps {
- 		// 소스코드 체크아웃
-	 	checkout scm
- 		echo 'Checkout'
- 		}
- 
- 	}
- 	stage('Build') {
-		steps {
-			// Java 파일들을 컴파일하여 생성된 클래스 파일을 classes 디렉토리에 저장
-			// window 일 경우 bat
-		 	bat 'javac -encoding UTF-8 -d classes book-management/src/*.java'
-		echo 'Build'
-		}
-	}
-	stage('Test') {
-		 steps {
-		 // JUnit 5 테스트 실행을 위한 classpath 설정
-		 //def classpath = "classes;C:\\Program Files\\Java\\jre-1.8\\lib\\; C:\\Users\\whddn\\eclipse\\java-2024-03\\eclipse\\plugins\\org.eclipse.equinox.launcher_1.6.700.v20240213-1244.jar" 
-		// JUnit 5 테스트 실행
-		 bat 'java -cp classes;C:\\Program Files\\Java\\jre-1.8\\lib\\; C:\\Users\\whddn\\.p2\\pool\\plugins\\junit-platform-console-standalone-1.7.1.jar	org.junit.platform.console.ConsoleLauncher --scan-classpath >	test_results.txt' 
-		echo 'Test'
-		}
-	}
-	
- }
- post {
- always {
- // 테스트 결과 파일을 저장하기 위해 아카이브
- archiveArtifacts 'test_results.txt'
- }
- failure {
- echo 'Build or test failed'
- }
- success {
- echo 'Build and test succeeded'
- }
- }
- 
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                // 소스코드 체크아웃
+                checkout scm
+                echo 'Checkout'
+            }
+        }
+        stage('Build') {
+            steps {
+                // Java 파일들을 컴파일하여 생성된 클래스 파일을 classes 디렉토리에 저장
+                // window 일 경우 bat
+                bat 'javac -encoding UTF-8 -d classes book-management/src/*.java'
+                echo 'Build'
+            }
+        }
+        stage('Test') {
+            steps {
+                // JUnit 5 테스트 실행을 위한 classpath 설정
+                // JUnit 5 테스트 실행
+                bat 'java -cp "classes;C:\\Program Files\\Java\\jre1.8.0_291\\lib\\*;C:\\Users\\whddn\\.p2\\pool\\plugins\\junit-platform-console-standalone-1.7.1.jar" org.junit.platform.console.ConsoleLauncher --scan-classpath > test_results.txt' 
+                echo 'Test'
+            }
+        }
+    }
+    post {
+        always {
+            // 테스트 결과 파일을 저장하기 위해 아카이브
+            archiveArtifacts 'test_results.txt'
+        }
+        failure {
+            echo 'Build or test failed'
+        }
+        success {
+            echo 'Build and test succeeded'
+        }
+    }
 }
