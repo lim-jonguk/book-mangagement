@@ -22,7 +22,7 @@ pipeline {
 		 // JUnit 5 테스트 실행을 위한 classpath 설정
 		 //def classpath = "classes;C:\\Program Files\\Java\\jre-1.8\\lib\\; C:\\Users\\whddn\\eclipse\\java-2024-03\\eclipse\\plugins\\org.eclipse.equinox.launcher_1.6.700.v20240213-1244.jar" 
 		// JUnit 5 테스트 실행
-		 bat 'java -cp classes;C:\\Program Files\\Java\\jre-1.8\\lib\\; C:\\Users\\whddn\\.p2\\pool\\plugins\\org.eclipse.equinox.launcher_1.6.700.v20240213-1244.jar	org.junit.platform.console.ConsoleLauncher --scan-classpath >	test_results.txt' 
+		 bat 'java -cp classes;C:\\Program Files\\Java\\jre-1.8\\lib\\; C:\\Users\\whddn\\.p2\\pool\\plugins\\junit-platform-console-standalone-1.7.1.jar	org.junit.platform.console.ConsoleLauncher --scan-classpath >	test_results.txt' 
 		echo 'Test'
 		}
 	}
