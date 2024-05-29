@@ -12,7 +12,7 @@ pipeline {
             steps {
                 // Java 파일들을 컴파일하여 생성된 클래스 파일을 classes 디렉토리에 저장
                 // window 일 경우 bat
-                //bat 'javac -encoding UTF-8 -d classes book-management/src/*.java'
+                //bat 'javac -encoding UTF-8  -cp lib/* -d classes book-management/src/*.java'
                 echo 'Build'
             }
         }
@@ -20,7 +20,7 @@ pipeline {
             steps {
                 // JUnit 5 테스트 실행을 위한 classpath 설정
                 // JUnit 5 테스트 실행
-                bat 'java -cp "classes;C:\\Program Files\\Java\\jre1.8.0_291\\lib\\*;C:\\Users\\whddn\\.p2\\pool\\plugins\\junit-platform-console-standalone-1.7.1.jar" org.junit.platform.console.ConsoleLauncher --scan-classpath > test_results.txt' 
+                bat 'java -cp "classes;lib/junit-platform-console-standalone-1.7.1.jar" org.junit.platform.console.ConsoleLauncher --scan-classpath > test_results.txt ' 
                 echo 'Test'
             }
         }
