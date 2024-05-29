@@ -20,7 +20,7 @@ pipeline {
             steps {
                 // JUnit 5 테스트 실행을 위한 classpath 설정
                 // JUnit 5 테스트 실행
-                bat 'java -cp "classes;lib/junit-platform-console-standalone-1.7.1.jar" org.junit.platform.console.ConsoleLauncher --scan-classpath > test_results.txt' 
+                bat 'java -cp "classes;book-management/lib/junit-platform-console-standalone-1.7.1.jar" org.junit.platform.console.ConsoleLauncher --scan-classpath > test_results.txt' 
                 echo 'Test'
             }
         }
