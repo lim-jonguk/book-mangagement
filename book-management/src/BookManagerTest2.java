@@ -38,6 +38,46 @@ class BookManagerTest2 {
 	}
     
     @Test
+    public void compareBsWithN() {
+        // 10개 이상의 엔트리 추가
+        for (int i = 1; i <= 10000; i++) {
+        	bookManager.addBook(i, "Book " + i, "Author " + i, 2000 + i);
+        }
+        
+        long n_delta = 0;
+        long bs_delta = 0;
+        
+        long startTime ,endTime,duration;
+	    for(int i=0 ;i<10; i++) {
+	    	startTime= System.nanoTime(); // 시작 시간 측정
+	        bookManager.searchBook( (int)((Math.random()*10000)) ); // 테스트할 메소드 실행
+	        endTime = System.nanoTime(); // 종료 시간 측정
+	        
+	        duration = endTime - startTime; // 실행 시간 계산
+	        n_delta += duration;
+	    }
+	    n_delta /= 10;
+	    for(int i=0 ;i<10; i++) {
+	    	startTime= System.nanoTime(); // 시작 시간 측정
+	        bookManager.search_bs( (int)((Math.random()*10000)) ); // 테스트할 메소드 실행
+	        endTime = System.nanoTime(); // 종료 시간 측정
+	        
+	        duration = endTime - startTime; // 실행 시간 계산
+	        bs_delta += duration;
+	    }
+	    bs_delta /= 10;
+
+        System.out.println("search_bs() Execution Time: " + bs_delta + " nanoseconds");
+        System.out.println("search() Execution Time: " + n_delta + " nanoseconds");
+        
+        System.out.println("In average , search_bs is faster than search_normal by " + Math.abs(n_delta - bs_delta) + " nanoseconds");
+        System.out.println("In average , search_bs is faster than search_normal by " + (n_delta / bs_delta)*100 + "%");
+        
+    }
+    
+    
+    
+    @Test
     public void testBinarySearch() {
         // 10개 이상의 엔트리 추가
         for (int i = 1; i <= 15; i++) {
