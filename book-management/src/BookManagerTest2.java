@@ -9,7 +9,8 @@ class BookManagerTest2 {
     @BeforeEach
     void setUp() {
         // 테스트 시작 전에 BookManager 인스턴스 생성 및 초기화
-        bookManager = new BookManager();
+        bookManager =  BookManager.getInstance();
+    	bookManager.getBooks().clear();
     }
 
     @Test
@@ -35,7 +36,29 @@ class BookManagerTest2 {
         IllegalArgumentException e = assertThrows(IllegalArgumentException.class,() ->bookManager.searchBook(4), "해당 ID(4)의 도서를 찾을 수 없습니다.\n검색된 도서가 없습니다.");
         System.out.println("SearchBookID test end : " + e.getMessage());
 	}
+    
+    @Test
+    public void testBinarySearch() {
+        // 10개 이상의 엔트리 추가
+        for (int i = 1; i <= 15; i++) {
+        	bookManager.addBook(i, "Book " + i, "Author " + i, 2000 + i);
+        }
 
+        // 최적의 경우: 첫 번째 책을 찾을 때
+        assertEquals("Book 1", bookManager.search_bs(1).title);
+
+        // 최악의 경우: 마지막 책을 찾을 때
+        assertEquals("Book 15", bookManager.search_bs(15).title);
+
+        // 중간의 책을 찾을 때
+        assertEquals("Book 8", bookManager.search_bs(8).title);
+
+        // 못 찾을 경우: 존재하지 않는 ID
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+        	bookManager.search_bs(20);
+        });
+        assertTrue(exception.getMessage().contains("해당 ID(20)의 도서를 찾을 수 없습니다."));
+    }
 	@Test
 	void testSearchBookTitle() {
     	System.out.println("SearchBookTitle test start");
